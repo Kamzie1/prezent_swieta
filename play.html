@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="cssmain.css" rel="stylesheet"/>
+  <title>Prezent na święta</title>
+</head>
+<body>
+  <div class="gameboard">
+    <div class="stats">
+    <h1>Serca: </h1><div id="serca"></div><br><h1>Wynik: </h1>
+    <div id="score"></div>
+  </div>
+    <canvas class="canvas" id="canvas_id"></canvas>
+  </div>
+</body>
+<script>
+  const canvas = document.getElementById('canvas_id');
+  const ctx = canvas.getContext('2d');
+  const CANVAS_WIDTH = canvas.width = 1900;
+  const CANVAS_HEIGHT = canvas.height = 800;
+
+  const playerImage = new Image();
+  playerImage.src = 'img/elf.png';
+  let serca;
+  let score = 0;
+  let difficulty = localStorage.getItem('difficulty');
+  difficulty = parseInt(difficulty, 10);
+
+  let direction_iterator = 0;
+  let sw = 150, sh = 250; 
+  let wsp_x = CANVAS_WIDTH / 2;
+  let wsp_y = CANVAS_HEIGHT - sh;
+  let speed;
+  let czestosc;
+
+  let pos_x=99, pos_y=100, pos_x_2 = 0, width_pos = 45, height_pos = 10;
+
+  let swp = 50, shp = 50; 
+  let predkosc_prezentow;
+
+  switch(difficulty)
+  {
+    case 0:
+      serca = 5;
+      speed = 20;
+      predkosc_prezentow = 3;
+      czestosc=100;
+      break;
+    case 1:
+      serca = 3;
+      speed = 15;
+      predkosc_prezentow = 3;
+      czestosc=80;
+      break;
+    case 2:
+      serca = 3;
+      speed = 10;
+      predkosc_prezentow = 5;
+      czestosc=80;
+      break;
+    case 3:
+      serca = 1;
+      speed = 10;
+      predkosc_prezentow = 8;
+      czestosc=100;
+      break;
+    case 4:
+      serca = 3;
+      speed=30;
+      predkosc_prezentow=10;
+      czestosc=50;
+      break;
+    case 5:
+      serca = localStorage.getItem('serca');
+      serca = parseInt(serca, 10);
+      speed=localStorage.getItem('speed');
+      speed = parseInt(speed, 10);
+      predkosc_prezentow=localStorage.getItem('predkosc');
+      predkosc_prezentow = parseInt(predkosc_prezentow, 10);
+      czestosc=localStorage.getItem('czestosc');
+      czestosc = parseInt(czestosc, 10)*10;
+      break;
+  }
+
+  let prezents = [];
+  let images = ["img/prezent1.png", "img/prezent2.png", "img/prezent3.png",
+                "img/prezent4.png", "img/prezent5.png", "img/prezent6.png",
+                "img/prezent7.png", "img/prezent8.png"];
+
+  const keys = {
+    ArrowLeft: false,
+    ArrowRight: false
+  };
+
+  window.addEventListener('keydown', (event) => {
+    if (event.key in keys) keys[event.key] = true;
+  });
+
+  window.addEventListener('keyup', (event) => {
+    if (event.key in keys) keys[event.key] = false;
+  });
+
+  function losuj(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function update() {
+    if (keys.ArrowLeft) {
+      direction_iterator = 1;
+      wsp_x -= speed;
+    }
+    if (keys.ArrowRight) {
+      direction_iterator = 0;
+      wsp_x += speed;
+    }
+    wsp_x = Math.max(0, Math.min(CANVAS_WIDTH - sw, wsp_x));
+  }
+
+  function dziala(wsp_x_p)
+  {
+    if(direction_iterator==0)
+    {
+      if(wsp_x_p>=wsp_x-width_pos+pos_x-20&&wsp_x_p<=wsp_x+pos_x+width_pos+20)
+        return true;
+    }
+    else{
+      if(wsp_x_p>=wsp_x+pos_x_2-width_pos-20&&wsp_x_p<=wsp_x+width_pos+pos_x_2+20)
+        return true;
+    }
+    return false;
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    ctx.drawImage(playerImage, sw * direction_iterator, 0, sw, sh, wsp_x, wsp_y, sw, sh);
+
+    for (let i = 0; i < prezents.length; i++) {
+      let prezent = prezents[i];
+      if(prezent.img === null)
+      {
+        continue;
+      }
+      prezent.wsp_y_p += predkosc_prezentow;
+      if (prezent.wsp_y_p <= CANVAS_HEIGHT - shp) {
+        ctx.drawImage(prezent.img, 0, 0, swp, shp, prezent.wsp_x_p, prezent.wsp_y_p, swp, shp);
+      }
+      else{
+        if(!prezent.img.src.includes("img/prezent8.png"))  serca--;
+        document.getElementById("serca").textContent = serca;
+        prezent.wsp_y_p = null;
+        prezent.wsp_x_p = null;
+        prezent.img = null;
+      }
+      if(prezent.wsp_y_p>=wsp_y-speed&&prezent.wsp_y_p<=wsp_y+speed&&dziala(prezent.wsp_x_p))
+      {  
+        if(prezent.img.src.includes("img/prezent8.png")) 
+        {
+            serca--;
+            document.getElementById("serca").textContent = serca;
+        }
+        else{
+          score++;
+          document.getElementById("score").textContent = score;
+        }
+        prezent.wsp_y_p = null;
+        prezent.wsp_x_p = null;
+        prezent.img = null;
+      }
+    }
+    prezents = prezents.filter(prezent => prezent.img !== null); 
+  }
+
+  function end_game()
+  {
+    localStorage.setItem('score', score);
+    window.location.href = "main.html";
+  }
+
+  function gameLoop() {
+    if(serca<=0)
+    {
+      end_game();
+    }
+    if (iteration % czestosc === 0) { 
+      let prezentImage = new Image();
+      prezentImage.src = images[losuj(0, 7)];
+      prezents.push({
+        img: prezentImage,
+        wsp_x_p: losuj(0, CANVAS_WIDTH - swp),
+        wsp_y_p: 0
+      });
+    }
+    update();
+    draw();
+    requestAnimationFrame(gameLoop);
+    iteration++;
+  }
+
+  document.getElementById("serca").textContent = serca;
+  document.getElementById("score").textContent = score;
+  let iteration = 0;
+  gameLoop();
+</script>
+</html>
