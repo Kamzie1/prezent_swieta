@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="cssmain.css" rel="stylesheet"/>
+<title>Prezent na święta</title>
+</head>
+<body>
+    <div class="front_page">
+    <section class="dane">
+        <form name = "data">
+          <label for="serca">Ilość serc:</label>
+          <input type="range" id="serca" class="range-input" min="1" value="3" step="1" />
+          <span id="sercaValue" class="value-display">3</span><br>
+        
+          <label for="speed">Szybkość gracza:</label>
+          <input type="range" id="speed" class="range-input" min="1" value="20" step="1" />
+          <span id="speedValue" class="value-display">20</span><br>
+        
+          <label for="predkosc">Prędkość spadających prezentów:</label>
+          <input type="range" id="predkosc" class="range-input" min="1" value="3" step="1" />
+          <span id="predkoscValue" class="value-display">3</span><br>
+        
+          <label for="czestosc">Częstotliwość występowania prezentów(fps/10):</label>
+          <input type="range" id="czestosc" class="range-input" min="1" value="10" step="1" />
+          <span id="czestoscValue" class="value-display">10</span><br>
+        </form>
+        <article class="button" id="prześlij">
+            <button class="button" id = "button">wyślij</button> 
+        </article>
+    </section>
+</div>
+</body>
+<script>
+
+function updateValue(inputId, displayId) {
+      const rangeInput = document.getElementById(inputId);
+      const valueDisplay = document.getElementById(displayId);
+      valueDisplay.textContent = rangeInput.value;
+    }
+    const rangeInputs = [
+      { id: 'serca', displayId: 'sercaValue' },
+      { id: 'speed', displayId: 'speedValue' },
+      { id: 'predkosc', displayId: 'predkoscValue' },
+      { id: 'czestosc', displayId: 'czestoscValue' },
+    ];
+
+    rangeInputs.forEach(input => {
+      const rangeInput = document.getElementById(input.id);
+      rangeInput.addEventListener('input', () => updateValue(input.id, input.displayId));
+      updateValue(input.id, input.displayId);
+    });
+var serca, speed, predkosc, czestosc;
+
+document.getElementById('button').addEventListener('click', function() {
+    serca = document.getElementById('serca').value;
+    speed = document.getElementById('speed').value;
+    predkosc = document.getElementById('predkosc').value;
+    czestosc = document.getElementById('czestosc').value;
+    localStorage.setItem("serca", serca);
+    localStorage.setItem("speed", speed);
+    localStorage.setItem("predkosc", predkosc);
+    localStorage.setItem("czestosc", czestosc);
+    window.location.href = 'play.html';
+});
+
+
+</script>
+</html>

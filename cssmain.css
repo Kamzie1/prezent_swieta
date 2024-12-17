@@ -1,0 +1,154 @@
+.body{
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: white;
+    margin: 0px;
+    padding: 0px;
+    height: 100vh;
+    width: 100vw;
+}
+.front_page{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    margin: 0px;
+    padding:0px;
+}
+
+.score{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+html{
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+}
+
+.play
+{
+    margin:10px;
+    height: 100px;
+    width: 200px;
+    font-size: larger;
+    border: 2px solid red;
+    background-color: brown;
+    color: white;
+    font-size: 200%;
+}
+
+.play:hover{
+    background-color: rgb(112, 30, 30);
+}
+
+.score_display{
+    margin:10px;
+    border: 2px solid red;
+    background-color: brown;
+    color: white;
+    width: 200px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 200%;
+}
+
+.easy{
+    margin:10px;
+    background-color: rgb(20, 172, 20);
+    font-size: 300%;
+    margin-top: 20px;
+    height: 100px;
+    width: 200px;
+    font-size: larger;
+    border: 2px solid rgb(69, 105, 15);
+}
+
+.normal{
+    margin:10px;
+    background-color: rgb(58, 66, 58);
+    font-size: 300%;
+    margin-top: 20px;
+    height: 100px;
+    width: 200px;
+    font-size: larger;
+    border: 2px solid rgb(28, 29, 27);
+}
+
+.hard{
+    margin:10px;
+    background-color: rgb(194, 25, 25);
+    font-size: 300%;
+    margin-top: 20px;
+    height: 100px;
+    width: 200px;
+    font-size: larger;
+    border: 2px solid rgb(105, 15, 15);
+}
+
+.insane{
+    margin:10px;
+    background-color: rgb(68, 23, 23);
+    font-size: 300%;
+    margin-top: 20px;
+    height: 100px;
+    width: 200px;
+    font-size: larger;
+    border: 2px solid rgb(39, 12, 12);
+}
+
+.crazy{
+    margin:10px;
+    background-color: rgb(65, 17, 58);
+    font-size: 300%;
+    margin-top: 20px;
+    height: 100px;
+    width: 200px;
+    font-size: larger;
+    border: 2px solid rgb(21, 2, 29);
+}
+
+.custom{
+    margin:10px;
+    background-color: rgb(255, 255, 255);
+    font-size: 300%;
+    margin-top: 20px;
+    height: 100px;
+    width: 200px;
+    font-size: larger;
+    border: 2px solid rgb(150, 149, 151);
+}
+
+#score_text{
+    margin:10px;
+}
+#serca{
+    font-size: xx-large;
+    margin: 10px;
+}
+#score
+{
+    font-size: xx-large;
+    margin: 10px;
+}
+
+.stats{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:20px;
+}
+.range-input{
+    margin:20px;
+    
+}
+

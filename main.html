@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="cssmain.css" rel="stylesheet"/>
+<title>Prezent na święta</title>
+</head>
+<body>
+    <section class="front_page">
+        <div class="score"> 
+            <div class="score_display" id="score_display_id">Wynik: <p id="score_text"></p></div>
+            <button class="easy" id="difficulty-button">Easy</button>
+            <button class="play" id ='play_id'>Graj</button>
+        </div>
+    </section>
+</body>
+<script>
+
+let score = localStorage.getItem('score');
+if (score === null) {
+  score = 0;
+  localStorage.setItem('score', score);
+}
+
+let difficulty=0;
+
+document.getElementById('play_id').addEventListener('click', function() {
+  localStorage.setItem('difficulty', difficulty);
+  if(difficulty==5) window.location.href = 'opcje.html';
+  else window.location.href = 'play.html';
+});
+
+document.getElementById('difficulty-button').addEventListener('click', function() {
+  const difficulty_button = document.getElementById('difficulty-button');
+  if(difficulty<5)
+    difficulty++;
+  else    difficulty=0;
+  switch(difficulty)
+  {
+    case 0:
+        difficulty_button.textContent = "Easy";
+        difficulty_button.className = "easy";
+        break;
+    case 1:
+        difficulty_button.textContent = "Normal";
+        difficulty_button.className = "normal";
+        break;
+    case 2:
+        difficulty_button.textContent = "Hard";
+        difficulty_button.className = "hard";
+        break;
+    case 3:
+        difficulty_button.textContent = "Insane";
+        difficulty_button.className = "insane";
+        break;
+    case 4:
+        difficulty_button.textContent = "Crazy";
+        difficulty_button.className = "crazy";
+        break;
+    case 5:
+        difficulty_button.textContent = "Custom";
+        difficulty_button.className = "custom";
+        break;
+  }
+});
+
+function update_score(){
+    const score_display = document.getElementById('score_text');
+    score = localStorage.getItem('score');
+    score_display.textContent = score;
+}
+
+
+update_score();
+</script>
+</html>
