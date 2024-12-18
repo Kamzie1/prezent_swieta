@@ -18,8 +18,8 @@
 <script>
   const canvas = document.getElementById('canvas_id');
   const ctx = canvas.getContext('2d');
-  const CANVAS_WIDTH = canvas.width = 1900;
-  const CANVAS_HEIGHT = canvas.height = 800;
+  const CANVAS_WIDTH = canvas.width = window.innerWidth ;
+  const CANVAS_HEIGHT = canvas.height = window.innerHeight-50;
 
   const playerImage = new Image();
   playerImage.src = 'img/elf.png';
@@ -31,7 +31,7 @@
   let direction_iterator = 0;
   let sw = 150, sh = 250; 
   let wsp_x = CANVAS_WIDTH / 2;
-  let wsp_y = CANVAS_HEIGHT - sh;
+  let wsp_y = CANVAS_HEIGHT - sh-40;
   let speed;
   let czestosc;
 
@@ -56,21 +56,21 @@
       break;
     case 2:
       serca = 3;
-      speed = 10;
+      speed = 13;
       predkosc_prezentow = 5;
-      czestosc=80;
+      czestosc=70;
       break;
     case 3:
       serca = 1;
-      speed = 10;
-      predkosc_prezentow = 8;
-      czestosc=100;
+      speed = 13;
+      predkosc_prezentow = 6;
+      czestosc=50;
       break;
     case 4:
       serca = 3;
       speed=30;
       predkosc_prezentow=10;
-      czestosc=50;
+      czestosc=40;
       break;
     case 5:
       serca = localStorage.getItem('serca');
@@ -122,11 +122,11 @@
   {
     if(direction_iterator==0)
     {
-      if(wsp_x_p>=wsp_x-width_pos+pos_x-20&&wsp_x_p<=wsp_x+pos_x+width_pos+20)
+      if(wsp_x_p>=wsp_x-width_pos+pos_x-20&&wsp_x_p<=wsp_x+pos_x+width_pos+10)
         return true;
     }
     else{
-      if(wsp_x_p>=wsp_x+pos_x_2-width_pos-20&&wsp_x_p<=wsp_x+width_pos+pos_x_2+20)
+      if(wsp_x_p>=wsp_x+pos_x_2-width_pos-10&&wsp_x_p<=wsp_x+width_pos+pos_x_2+20)
         return true;
     }
     return false;
@@ -153,7 +153,7 @@
         prezent.wsp_x_p = null;
         prezent.img = null;
       }
-      if(prezent.wsp_y_p>=wsp_y-speed&&prezent.wsp_y_p<=wsp_y+speed&&dziala(prezent.wsp_x_p))
+      if(prezent.wsp_y_p>=wsp_y+30&&prezent.wsp_y_p<=wsp_y+100&&dziala(prezent.wsp_x_p))
       {  
         if(prezent.img.src.includes("img/prezent8.png")) 
         {
